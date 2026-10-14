@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Portfolio — Linear Aesthetic</title>
+  <meta id="meta-description" name="description" content="Portfolio engineered with Linear's precision design system." />
+  
+  <!-- Favicon SVG (Linear-inspired sleek monogram) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23010102'/%3E%3Cpath d='M8 22L16 6L24 22H19.5L16 14L12.5 22H8Z' fill='%235e6ad2'/%3E%3Ccircle cx='16' cy='18' r='2' fill='%23828fff'/%3E%3C/svg%3E" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN v3.4 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#010102',
+            'surface-1': '#0f1011',
+            'surface-2': '#141516',
+            'surface-3': '#18191a',
+            'surface-4': '#191a1b',
+            hairline: '#23252a',
+            'hairline-strong': '#34343a',
+            'hairline-tertiary': '#3e3e44',
+            primary: '#5e6ad2',
+            'primary-hover': '#828fff',
+            'primary-focus': '#5e69d1',
+            ink: '#f7f8f8',
+            'ink-muted': '#d0d6e0',
+            'ink-subtle': '#8a8f98',
+            'ink-tertiary': '#62666d',
+            'semantic-success': '#27a644',
+          },
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'Menlo', 'monospace'],
+          },
+          letterSpacing: {
+            tighter: '-0.04em',
+            tight: '-0.025em',
+            normal: '-0.005em',
+            eyebrow: '0.08em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Linear Styling -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body class="bg-[#010102] text-ink antialiased selection:bg-[#5e6ad2]/30 selection:text-white">
+
+  <!-- Background subtle grid -->
+  <div class="fixed inset-0 bg-linear-grid pointer-events-none z-0 opacity-40"></div>
+  <div class="fixed inset-0 hero-spotlight pointer-events-none z-0"></div>
+
+  <!-- Top Sticky Navigation Bar (Linear 56px height specification) -->
+  <header class="sticky top-0 z-40 w-full h-14 bg-[#010102]/85 backdrop-blur-md border-b border-hairline transition-all">
+    <div class="max-w-6xl mx-auto h-full px-4 sm:px-6 flex items-center justify-between">
+      
+      <!-- Left: Logo & Identity (Dynamically bound) -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <!-- Monogram Badge with initial letter -->
+        <div id="nav-logo-initial" class="w-6 h-6 rounded-md bg-[#5e6ad2] flex items-center justify-center text-white text-xs font-bold shadow-sm group-hover:bg-[#828fff] transition">
+          S
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="nav-profile-name" class="text-sm font-semibold tracking-tight text-white">Loading...</span>
+          <span id="nav-status-badge" class="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#27a644]/10 text-emerald-400 border border-[#27a644]/20">
+            <span class="status-dot-active"></span>
+            <span id="nav-status-text">Available</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- Center: Section Nav Links -->
+      <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-ink-subtle">
+        <a href="#overview" class="hover:text-ink transition">Overview</a>
+        <a href="#projects" class="hover:text-ink transition">Issues & Projects</a>
+        <a href="#changelog" class="hover:text-ink transition">Changelog</a>
+        <a href="#stack" class="hover:text-ink transition">Stack</a>
+        <a href="#testimonials" class="hover:text-ink transition">Reviews</a>
+      </nav>
+
+      <!-- Right: Clickable Search, Sound, Intake Button (NO SHORTCUTS) -->
+      <div class="flex items-center gap-2">
+        <!-- Search Button (Clickable) -->
+        <button onclick="openCommandPalette()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-1 hover:bg-surface-2 border border-hairline text-xs text-ink-subtle hover:text-ink transition shadow-sm" title="Search work">
+          <svg class="w-3.5 h-3.5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span class="hidden sm:inline">Search work</span>
+        </button>
+
+        <!-- Sound FX Toggle Button -->
+        <button id="sound-toggle-btn" class="p-2 rounded-lg bg-surface-1 hover:bg-surface-2 border border-hairline text-ink-subtle hover:text-ink transition" title="Sound FX: Enabled">
+          <svg class="w-4 h-4 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
+        </button>
+
+        <!-- Intake CTA Button (Clickable, No shortcut badge) -->
+        <button onclick="openIntakeModal()" class="btn-primary text-xs hidden sm:inline-flex">
+          <span>File Issue</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- HERO SECTION -->
+    <section id="overview" class="pt-16 pb-20 md:pt-24 md:pb-28">
+      
+      <!-- Eyebrow Pill (Dynamically populated) -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-1 border border-hairline text-xs font-mono text-ink-muted mb-6 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-[#5e6ad2]"></span>
+        <span id="hero-eyebrow" class="tracking-eyebrow uppercase text-[11px] font-medium">Cycle 1 · System Analyst & Project Manager</span>
+      </div>
+
+      <!-- Hero Heading (Linear aggressive negative letter-spacing) -->
+      <h1 id="hero-headline" class="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tighter text-[#f7f8f8] leading-[1.08] max-w-4xl mb-6">
+        Built with precision.<br />
+        <span class="text-zinc-500">Shipped for high velocity.</span>
+      </h1>
+
+      <!-- Hero Subhead / Bio (Dynamically populated from profile.bio) -->
+      <p id="hero-bio" class="text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl mb-8 font-normal">
+        Loading bio...
+      </p>
+
+      <!-- Action Buttons Row (Clickable, No shortcut badges) -->
+      <div class="flex flex-wrap items-center gap-3 mb-14">
+        <a href="#projects" class="btn-primary text-sm">
+          <span>Explore Issues & Work</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
+
+        <button onclick="openIntakeModal()" class="btn-secondary text-sm">
+          <span>Initiate Project (Intake)</span>
+        </button>
+
+        <button onclick="copyEmail()" class="btn-ghost text-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          </svg>
+          <span>Copy Email</span>
+        </button>
+      </div>
+
+      <!-- Key Performance Strip (1-column vertical hierarchy per card, dynamically rendered via app.js) -->
+      <div id="stats-strip" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-14">
+        <!-- Rendered via app.js -->
+      </div>
+
+      <!-- High-Fidelity Linear Dashboard UI Frame (The "Hero Protagonist") -->
+      <div class="border border-hairline rounded-2xl bg-surface-1 specular-top shadow-[0_24px_64px_rgba(0,0,0,0.8)] overflow-hidden">
+        
+        <!-- Mock Window Chrome (Clean header, 3 dots removed, perfectly round green status dot) -->
+        <div class="px-4 py-3 bg-surface-2 border-b border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2">
+            <svg class="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+            </svg>
+            <span id="dashboard-breadcrumb" class="text-xs font-mono text-zinc-400 truncate">workspace / sulthanananta / telemetry-monitor</span>
+          </div>
+          <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-950/40 text-emerald-400 border border-emerald-800/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0 inline-block"></span>
+              <span>ALL SYSTEMS OPERATIONAL</span>
+            </span>
+            <span class="text-xs font-mono text-zinc-500">v4.4.2</span>
+          </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="p-6 md:p-8 space-y-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            <!-- Left: Velocity & Burnup Graph (SVG) -->
+            <div class="lg:col-span-7 space-y-3 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <div>
+                    <h3 class="text-sm font-semibold text-white">Sprint Velocity & Code Throughput</h3>
+                    <p class="text-xs text-zinc-500">Weekly commit cadence and issue resolution velocity</p>
+                  </div>
+                  <span id="dashboard-velocity-badge" class="text-xs font-mono text-[#828fff] bg-[#5e6ad2]/10 px-2 py-0.5 rounded border border-[#5e6ad2]/20">Velocity 80%</span>
+                </div>
+
+                <!-- Mini Line Chart SVG -->
+                <div class="h-32 w-full pt-3">
+                  <svg class="w-full h-full overflow-visible" viewBox="0 0 500 100" fill="none">
+                    <!-- Grid lines -->
+                    <line x1="0" y1="20" x2="500" y2="20" stroke="#23252a" stroke-dasharray="3 3"/>
+                    <line x1="0" y1="50" x2="500" y2="50" stroke="#23252a" stroke-dasharray="3 3"/>
+                    <line x1="0" y1="80" x2="500" y2="80" stroke="#23252a" stroke-dasharray="3 3"/>
+
+                    <!-- Gradient Area -->
+                    <defs>
+                      <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#5e6ad2" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="#5e6ad2" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    
+                    <path d="M0,80 Q70,75 140,50 T280,35 T420,15 T500,8 L500,100 L0,100 Z" fill="url(#chartGlow)"/>
+                    <path d="M0,80 Q70,75 140,50 T280,35 T420,15 T500,8" stroke="#5e6ad2" stroke-width="2.5" stroke-linecap="round"/>
+
+                    <!-- Active Points -->
+                    <circle cx="140" cy="50" r="3" fill="#828fff" stroke="#010102" stroke-width="2"/>
+                    <circle cx="280" cy="35" r="3" fill="#828fff" stroke="#010102" stroke-width="2"/>
+                    <circle cx="420" cy="15" r="3" fill="#828fff" stroke="#010102" stroke-width="2"/>
+                    <circle cx="500" cy="8" r="4" fill="#ffffff" stroke="#5e6ad2" stroke-width="2"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="flex justify-between text-[11px] font-mono text-zinc-500 pt-2 border-t border-hairline/60">
+                <span>W01</span><span>W04</span><span>W08</span><span>W12</span><span>W16</span>
+              </div>
+            </div>
+
+            <!-- Right: Active Telemetry & Commit Log (Spacious, Clean, Never Overcrowded) -->
+            <div class="lg:col-span-5 bg-surface-2/80 p-5 rounded-xl border border-hairline font-mono text-xs flex flex-col justify-between">
+              <div>
+                <div class="text-[11px] text-zinc-400 uppercase tracking-wider flex items-center justify-between border-b border-hairline pb-2.5 mb-3">
+                  <span>Production Telemetry</span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">LIVE</span>
+                </div>
+
+                <div class="space-y-2.5 text-zinc-300">
+                  <div class="p-2.5 rounded-lg bg-black/40 border border-white/5 space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-zinc-500">commit 7f2a1b9</span>
+                      <span class="text-emerald-400 font-medium">approved</span>
+                    </div>
+                    <div class="text-white text-xs font-sans font-medium">spec(architecture): BPMN & UML</div>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-black/40 border border-white/5 space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-zinc-500">commit 3d8e9c4</span>
+                      <span class="text-emerald-400 font-medium">deployed</span>
+                    </div>
+                    <div class="text-white text-xs font-sans font-medium">model(schema): PostgreSQL ERD</div>
+                  </div>
+
+                  <div class="p-2.5 rounded-lg bg-black/40 border border-white/5 space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-zinc-500">commit a219df0</span>
+                      <span class="text-emerald-400 font-medium">verified</span>
+                    </div>
+                    <div class="text-white text-xs font-sans font-medium">agile(sprint): cycle review 1.0</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 mt-3 border-t border-hairline flex items-center justify-between text-[11px] text-zinc-400">
+                <span>System Health Index</span>
+                <span class="text-white font-semibold font-mono">Optimal (100%)</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- PROJECTS & ISSUES BOARD SECTION -->
+    <section id="projects" class="py-16 md:py-24 border-t border-hairline">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <div class="text-xs font-mono text-[#828fff] tracking-eyebrow uppercase font-semibold mb-2">
+            TRACKER / ACTIVE CYCLES
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+            Projects, Systems & Code Shipped
+          </h2>
+          <p class="text-xs sm:text-sm text-ink-subtle mt-1">
+            Engineered with deep focus on performance, scalability, and UX finesse.
+          </p>
+        </div>
+
+        <!-- Issue Counter & Quick Action -->
+        <div class="flex items-center gap-3">
+          <span id="project-count-badge" class="px-2.5 py-1 rounded-md bg-surface-1 border border-hairline font-mono text-xs text-zinc-400">
+            0 issues
+          </span>
+          <button onclick="openIntakeModal()" class="btn-secondary text-xs">
+            <svg class="w-3.5 h-3.5 text-[#828fff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>New Issue</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls & Filter Toolbar -->
+      <div class="p-2 rounded-xl bg-surface-1 border border-hairline specular-top mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        
+        <!-- Category Filter Tabs (Dynamically generated from PORTFOLIO_DATA.projects) -->
+        <div id="category-tabs-container" class="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+          <!-- Injected via app.js -->
+        </div>
+
+        <!-- Search & View Mode Switcher -->
+        <div class="flex items-center gap-2">
+          <!-- Live Search Input -->
+          <div class="relative flex-1 md:w-56">
+            <svg class="w-3.5 h-3.5 text-zinc-500 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input id="project-search-input" type="text" placeholder="Filter issues..." class="w-full pl-8 pr-3 py-1.5 bg-surface-2 border border-hairline rounded-lg text-xs text-ink placeholder-zinc-500 focus:outline-none focus:border-[#5e6ad2] font-mono transition" />
+          </div>
+
+          <!-- View Mode Switcher: List vs Grid -->
+          <div class="flex items-center bg-surface-2 p-0.5 rounded-lg border border-hairline">
+            <button id="view-list-btn" class="p-1.5 rounded text-xs bg-white/10 text-white transition" title="Linear Issue List View">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <button id="view-grid-btn" class="p-1.5 rounded text-xs text-zinc-400 hover:text-white transition" title="Grid Showcase View">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Projects Container (Populated via app.js) -->
+      <div id="projects-container"></div>
+
+    </section>
+
+
+    <!-- TECH STACK & SYSTEM SPECIFICATIONS SECTION -->
+    <section id="stack" class="py-16 md:py-24 border-t border-hairline">
+      
+      <div class="mb-10">
+        <div class="text-xs font-mono text-[#828fff] tracking-eyebrow uppercase font-semibold mb-2">
+          SPECIFICATIONS / TOOLING
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+          System Architecture & Technologies
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-subtle mt-1">
+          A battle-tested stack selected for raw execution speed, modeling accuracy, and pragmatic development craft.
+        </p>
+      </div>
+
+      <!-- Stack Container (Dynamically populated from PORTFOLIO_DATA.stack) -->
+      <div id="stack-container" class="mb-8"></div>
+
+      <!-- System Diagnostic Panel -->
+      <div class="p-5 rounded-xl bg-surface-1 border border-hairline specular-top flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-950/40 border border-emerald-800/40 flex items-center justify-center text-emerald-400 font-mono text-xs">
+            ✓
+          </div>
+          <div>
+            <h4 class="text-xs font-semibold text-white">Architecture Review Status</h4>
+            <p class="text-[11px] text-zinc-400">All business requirements modeled and system components verified</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
+          <div>
+            <span class="text-zinc-600 block text-[10px]">ANALYSIS ACCURACY</span>
+            <span class="text-white">99.8%</span>
+          </div>
+          <div>
+            <span class="text-zinc-600 block text-[10px]">DOCUMENTATION</span>
+            <span class="text-white">Full Spec</span>
+          </div>
+          <div>
+            <span class="text-zinc-600 block text-[10px]">STATUS</span>
+            <span class="text-[#828fff]">Operational</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- CAREER CHANGELOG SECTION -->
+    <section id="changelog" class="py-16 md:py-24 border-t border-hairline">
+      
+      <div class="mb-10">
+        <div class="text-xs font-mono text-[#828fff] tracking-eyebrow uppercase font-semibold mb-2">
+          RELEASES / EXPERIENCE
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+          Career Evolution Changelog
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-subtle mt-1">
+          Linear-style chronological releases documenting impact, system design, and shipped milestones.
+        </p>
+      </div>
+
+      <!-- Changelog Container (Populated via app.js) -->
+      <div id="changelog-container" class="max-w-3xl"></div>
+
+    </section>
+
+
+    <!-- PEER REVIEWS & TESTIMONIALS SECTION -->
+    <section id="testimonials" class="py-16 md:py-24 border-t border-hairline">
+      
+      <div class="mb-10">
+        <div class="text-xs font-mono text-[#828fff] tracking-eyebrow uppercase font-semibold mb-2">
+          CODE REVIEWS / ENDORSEMENTS
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+          What Engineering Leaders Say
+        </h2>
+        <p class="text-xs sm:text-sm text-ink-subtle mt-1">
+          Feedback from directors, architects, and collaborators.
+        </p>
+      </div>
+
+      <!-- Testimonials Container (Populated via app.js) -->
+      <div id="testimonials-container"></div>
+
+    </section>
+
+
+    <!-- INTAKE & COLLABORATION CTA SECTION -->
+    <section id="intake-section" class="py-16 md:py-24 border-t border-hairline">
+      
+      <div class="relative rounded-2xl bg-surface-1 border border-hairline specular-top p-8 sm:p-12 overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.6)]">
+        
+        <!-- Subtle linear accent glow in corner -->
+        <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-[#5e6ad2]/10 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-2xl relative z-10">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-zinc-300 mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#5e6ad2]"></span>
+            <span id="intake-availability-text">NEXT AVAILABILITY: OPEN FOR INTERNSHIP</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-4">
+            Have a critical system to ship?<br />
+            Let's file the first issue.
+          </h2>
+
+          <p class="text-sm text-ink-muted leading-relaxed mb-8">
+            Available for system analysis consulting, product engineering, software architecture, and technology internships.
+          </p>
+
+          <!-- Action Buttons (Pure Clickable, No Shortcut Badges) -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openIntakeModal()" class="btn-primary text-sm">
+              <span>File Intake Issue</span>
+            </button>
+            <button onclick="copyEmail()" class="btn-secondary text-sm">
+              <span>Copy Direct Email</span>
+            </button>
+            <a id="intake-github-link" href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-ghost text-sm">
+              <span>GitHub</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER (Clean, No Shortcuts, Fixed Twitter/X wrapping) -->
+  <footer class="mt-20 border-t border-hairline bg-[#010102] py-12 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      
+      <!-- Left: Identity & Specs (Dynamically populated) -->
+      <div class="flex items-center gap-3">
+        <div id="footer-logo-initial" class="w-5 h-5 rounded bg-[#5e6ad2] flex items-center justify-center text-white text-[10px] font-bold">
+          S
+        </div>
+        <span id="footer-text" class="text-xs text-zinc-400">Crafted with Linear aesthetic discipline</span>
+      </div>
+
+      <!-- Right: Links (Clickable, No wrapping, No Shortcuts) -->
+      <div class="flex items-center gap-6 text-xs text-zinc-400">
+        <a id="footer-github" href="#" target="_blank" class="hover:text-white transition">GitHub</a>
+        <a id="footer-twitter" href="#" target="_blank" class="whitespace-nowrap hover:text-white transition">Twitter (X)</a>
+        <a id="footer-linkedin" href="#" target="_blank" class="hover:text-white transition">LinkedIn</a>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ==================== MODALS & OVERLAYS ==================== -->
+
+  <!-- 1. COMMAND PALETTE MODAL (Pure Clickable, No shortcuts) -->
+  <div id="command-palette-modal" class="fixed inset-0 z-50 hidden items-start justify-center pt-20 px-4 bg-black/75 backdrop-blur-sm" onclick="if(event.target===this)closeCommandPalette()">
+    <div class="w-full max-w-xl rounded-xl bg-surface-1 border border-hairline-strong specular-top shadow-[0_24px_80px_rgba(0,0,0,0.9)] overflow-hidden modal-enter">
+      
+      <!-- Search Input Header -->
+      <div class="p-3 border-b border-hairline flex items-center justify-between gap-3 bg-surface-2/70">
+        <div class="flex items-center gap-2.5 flex-1">
+          <svg class="w-4 h-4 text-zinc-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input id="command-palette-input" type="text" placeholder="Type to search issues, stack, or actions..." class="w-full bg-transparent text-sm text-ink placeholder-zinc-500 focus:outline-none font-mono" autocomplete="off" />
+        </div>
+        <button onclick="closeCommandPalette()" class="p-1 text-zinc-400 hover:text-white rounded hover:bg-white/5 transition" title="Close">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Search Results List -->
+      <div id="command-palette-results" class="p-2 max-h-80 overflow-y-auto space-y-1">
+        <!-- Injected via app.js -->
+      </div>
+
+      <!-- Footer Help -->
+      <div class="px-4 py-2 border-t border-hairline bg-surface-2/40 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+        <span>Click any item to open or jump</span>
+        <button onclick="closeCommandPalette()" class="text-zinc-400 hover:text-white transition">Close</button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- 2. PROJECT INSPECTOR DRAWER / MODAL -->
+  <div id="project-inspector-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onclick="if(event.target===this)closeProjectModal()">
+    <div id="project-inspector-content" class="w-full max-w-2xl rounded-2xl bg-surface-1 border border-hairline specular-top shadow-[0_32px_96px_rgba(0,0,0,0.9)] overflow-hidden modal-enter">
+      <!-- Injected via app.js openProjectModal -->
+    </div>
+  </div>
+
+
+  <!-- 3. LINEAR ISSUE INTAKE MODAL ("HIRE ME / CONTACT") -->
+  <div id="intake-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onclick="if(event.target===this)closeIntakeModal()">
+    <div class="w-full max-w-lg rounded-2xl bg-surface-1 border border-hairline specular-top shadow-[0_32px_96px_rgba(0,0,0,0.9)] overflow-hidden modal-enter">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-hairline flex items-center justify-between bg-surface-2/50">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded bg-[#5e6ad2] flex items-center justify-center text-[8px] text-white font-bold">+</div>
+          <span class="text-xs font-mono font-medium text-white">NEW ISSUE / INTAKE REQUEST</span>
+        </div>
+        <button onclick="closeIntakeModal()" class="p-1 text-zinc-400 hover:text-white rounded">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Form Body -->
+      <form id="intake-form" onsubmit="submitIntake(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-mono text-zinc-400 mb-1.5">ISSUE TITLE</label>
+          <input id="intake-title" type="text" required placeholder="e.g. Build Real-Time Analytics Engine" class="w-full px-3 py-2 bg-surface-2 border border-hairline rounded-lg text-sm text-ink placeholder-zinc-500 focus:outline-none focus:border-[#5e6ad2] font-mono" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">PRIORITY</label>
+            <select class="w-full px-3 py-2 bg-surface-2 border border-hairline rounded-lg text-xs text-ink focus:outline-none focus:border-[#5e6ad2] font-mono">
+              <option value="urgent">🔴 Urgent / Immediate</option>
+              <option value="high" selected>📶 High Priority</option>
+              <option value="medium">▰ Medium</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-zinc-400 mb-1.5">SCOPE / ENGAGEMENT</label>
+            <select class="w-full px-3 py-2 bg-surface-2 border border-hairline rounded-lg text-xs text-ink focus:outline-none focus:border-[#5e6ad2] font-mono">
+              <option value="internship" selected>Internship / Junior Role</option>
+              <option value="fulltime">Full-Time Staff / Lead</option>
+              <option value="contract">Project Contract (Sprint)</option>
+              <option value="advisory">Architecture Advisory</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-zinc-400 mb-1.5">YOUR CONTACT EMAIL</label>
+          <input id="intake-email" type="email" required placeholder="recruiter@company.com" class="w-full px-3 py-2 bg-surface-2 border border-hairline rounded-lg text-sm text-ink placeholder-zinc-500 focus:outline-none focus:border-[#5e6ad2] font-mono" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-mono text-zinc-400 mb-1.5">TECHNICAL REQUIREMENTS / SUMMARY</label>
+          <textarea id="intake-desc" rows="3" placeholder="Provide background on your architecture, timeline, and goals..." class="w-full px-3 py-2 bg-surface-2 border border-hairline rounded-lg text-xs text-ink placeholder-zinc-500 focus:outline-none focus:border-[#5e6ad2] font-mono resize-none"></textarea>
+        </div>
+
+        <!-- Form Footer Actions (Clean, No shortcuts) -->
+        <div class="pt-4 border-t border-hairline flex items-center justify-between">
+          <span class="text-[11px] font-mono text-zinc-500">
+            Directly routed to email
+          </span>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeIntakeModal()" class="btn-ghost text-xs">Cancel</button>
+            <button type="submit" class="btn-primary text-xs">Submit Issue</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Main JavaScript Engine -->
+  <script src="./app.js"></script>
+
+</body>
+</html>
